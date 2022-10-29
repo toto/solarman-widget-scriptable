@@ -4,7 +4,7 @@ Widget for the Solarman API using scriptable.app. The API has been reverse engin
 
 ## Dependencies
 
-To employ SHA256 the app uses the [sjcl](https://github.com/bitwiseshiftleft/sjcl) library. 
+To employ SHA256 the script uses the [sjcl](https://github.com/bitwiseshiftleft/sjcl) library. 
 
 ## Usage
 
