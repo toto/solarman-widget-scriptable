@@ -11,3 +11,7 @@ To employ SHA256 the app uses the [sjcl](https://github.com/bitwiseshiftleft/sjc
 1. Fill in `USERNAME` and `PASSWORD` on top of the `solarman-widget.js` file with your login data.
 2. Copy `solarman-widget.js` and `lib/sjcl.js` into your Scriptable directory (see [scriptable.app](https://scriptable.app) for more infos).
 3. Add a small widget to your home screen and choose solarman-widget in the widget config.
+
+## Documentation
+
+Also contains a [rough API documentation](https://github.com/toto/solarman-widget-scriptable/blob/main/doc/API.md) of the reverse enginnered parts of the SOLARMAN API.
