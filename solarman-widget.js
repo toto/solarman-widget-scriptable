@@ -74,7 +74,7 @@ async function stationSearch(token, page = 1) {
   return data;
 }
 
-function createWidget(homeData) {
+function createMediumWidget(homeData) {
   const widget = new ListWidget();
   const gradient = new LinearGradient();
   gradient.colors = [new Color("#0064A6"), new Color("#D6A94B")];
@@ -103,8 +103,31 @@ function createWidget(homeData) {
   updatedAtText.textColor = Color.white();
   updatedAtText.font = Font.caption2();
 
-  
+  return widget;
+}
 
+function createCircularLockScreenWidget(homeData) {
+  const widget = new ListWidget();
+  widget.addAccessoryWidgetBackground = true
+
+  widget.addSpacer();
+
+  const wattText = `${homeData.currentWatts.toFixed(0)}W`
+  wattText.minimumScaleFactor = 0.75
+  const titleText = widget.addText(wattText);
+  titleText.textColor = Color.white();
+  titleText.centerAlignText()
+  titleText.font = Font.boldSystemFont(14);
+
+  const totalkWh = `${homeData.generationValue.toFixed(1) }kWh`
+  const totalText = widget.addText(totalkWh);
+  totalText.minimumScaleFactor = 0.75
+  totalText.centerAlignText()
+  totalText.textColor = Color.white();
+  totalText.font = Font.systemFont(12);
+  
+  widget.addSpacer();
+  
   return widget;
 }
 
@@ -120,14 +143,12 @@ function extractHomeData(home) {
     formatter.useShortDateStyle();
   }
   
-  
-
   return {
     lastUpdated,
     lastUpdatedLabel: `Updated ${formatter.string(lastUpdated, new Date())}`,
-    currentWatts: home.generationPower,
-    generationValue: home.generationValue,
-    percentOfCapacity: home.generationCapacity,
+    currentWatts: home.generationPower ?? 0,
+    generationValue: home.generationValue ?? 0,
+    percentOfCapacity: home.generationCapacity ?? 0,
     name: home.name,
     temperature: home.temperature,
     weather: home.weather,
@@ -142,10 +163,17 @@ const [firstHome] = searchResponse.data;
 const homeData = extractHomeData(firstHome);
 console.log(`Home Response: ${JSON.stringify(homeData)}`);
 
-// if (config.runsInWidget) {
-let widget = createWidget(homeData);
-Script.setWidget(widget);
-Script.complete();
-// } else {
-//   console.log("Hello!")
-// }
+if (config.runsInAccessoryWidget) {
+  if (config.widgetFamily == 'accessoryCircular') {
+    let widget = createCircularLockScreenWidget(homeData);
+    Script.setWidget(widget);
+    Script.complete();
+  }
+} else if (config.runsInWidget) {
+  let widget = createMediumWidget(homeData);
+  Script.setWidget(widget);
+  Script.complete();
+} else {
+  console.log("Not running in widget or home screen");
+  console.log(`config = ${JSON.stringify(config)}`);
+}
