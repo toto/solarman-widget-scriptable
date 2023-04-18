@@ -3,11 +3,14 @@
 // icon-color: deep-gray; icon-glyph: magic;
 const sjcl = importModule("lib/sjcl");
 
-// License: See LICENSE file
+// Source at https://github.com/toto/solarman-widget-scriptable
+// License BSD-License: See LICENSE file for details
 // Use with https://scriptable.app
 
 // -- Configuration --
-const API_HOST = "api4home.solarmanpv.com";
+const API_HOST = "globalhomeappapi.solarmanpv.com";
+// Before 15.04.2023 the API endpoint was "api4home.solarmanpv.com"
+
 const USERNAME = "email@example.com";
 const PASSWORD = "yourPassword";
 // -------------------
